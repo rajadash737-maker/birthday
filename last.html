@@ -7,6 +7,16 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Quicksand:wght@300;400;500;600&display=swap');
 
+        :root {
+            --bg-1: #ffd1dc;
+            --bg-2: #e6e6fa;
+            --bg-3: #ffefd5;
+            --bg-4: #e6e6fa;
+            --accent: #ff69b4;
+            --accent-soft: #da70d6;
+            --text-strong: #4a4a4a;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -15,17 +25,12 @@
 
         body {
             min-height: 100vh;
-            background: linear-gradient(135deg,
-                    #ffd1dc 0%,
-                    #e6e6fa 25%,
-                    #ffefd5 50%,
-                    #e6e6fa 75%,
-                    #ffd1dc 100%);
+            background: linear-gradient(135deg, var(--bg-1) 0%, var(--bg-2) 30%, var(--bg-3) 60%, var(--bg-4) 100%);
             background-size: 400% 400%;
             animation: gradientFlow 15s ease infinite;
-            font-family: 'Quicksand', sans-serif;
+            font-family: 'Quicksand', 'Segoe UI Emoji', 'Noto Color Emoji', sans-serif;
             overflow-x: hidden;
-            color: #4a4a4a;
+            color: var(--text-strong);
         }
 
         @keyframes gradientFlow {
@@ -36,10 +41,7 @@
 
         .magic-sparkles {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            inset: 0;
             pointer-events: none;
             z-index: 1;
         }
@@ -48,8 +50,7 @@
         .magic-sparkles::after {
             content: '';
             position: absolute;
-            width: 100%;
-            height: 100%;
+            inset: 0;
             background-image: radial-gradient(circle, white 1px, transparent 1px);
             background-size: 50px 50px;
             animation: sparkleLayer 8s linear infinite;
@@ -89,7 +90,7 @@
 
         .welcome {
             text-align: center;
-            padding: 4rem 2rem;
+            padding: 4rem 2rem 2rem;
             position: relative;
             z-index: 3;
         }
@@ -97,43 +98,78 @@
         .welcome h1 {
             font-family: 'Dancing Script', cursive;
             font-size: 4rem;
-            color: #ff69b4;
+            color: var(--accent);
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
             animation: fadeInScale 2s ease;
         }
 
         .welcome p {
-            font-size: 1.2rem;
-            max-width: 600px;
-            margin: 1.5rem auto;
+            font-size: 1.1rem;
+            max-width: 700px;
+            margin: 1rem auto;
             line-height: 1.6;
             animation: fadeIn 2s ease 0.5s both;
+        }
+
+        .timeline {
+            max-width: 980px;
+            margin: 1rem auto 2.5rem;
+            padding: 0 1rem;
+            position: relative;
+            z-index: 3;
+        }
+
+        .timeline h2 {
+            font-family: 'Dancing Script', cursive;
+            color: var(--accent);
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .timeline-list {
+            display: grid;
+            gap: 12px;
+        }
+
+        .timeline-item {
+            background: rgba(255, 255, 255, 0.82);
+            border-radius: 14px;
+            padding: 0.9rem 1rem;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+            border-left: 5px solid var(--accent);
+        }
+
+        .timeline-item strong {
+            display: block;
+            color: var(--accent);
+            margin-bottom: 0.25rem;
         }
 
         .memory-container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 2rem;
+            padding: 1.5rem;
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
             z-index: 3;
             position: relative;
         }
 
         .memory-card {
-            background: rgba(255, 255, 255, 0.9);
+            background: rgba(255, 255, 255, 0.92);
             border-radius: 20px;
-            padding: 1.5rem;
+            padding: 1.2rem;
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
             transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
             overflow: hidden;
         }
 
-        .memory-card:hover {
-            transform: translateY(-10px) scale(1.02);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        .memory-card.active {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 18px 30px rgba(255, 105, 180, 0.2);
         }
 
         .memory-card::before {
@@ -159,6 +195,7 @@
             border-radius: 15px;
             margin-bottom: 1rem;
             transition: transform 0.5s ease;
+            cursor: zoom-in;
         }
 
         .memory-card:hover .memory-img {
@@ -167,7 +204,7 @@
 
         .memory-date {
             font-family: 'Dancing Script', cursive;
-            color: #ff69b4;
+            color: var(--accent);
             font-size: 1.3rem;
             margin-bottom: 0.5rem;
         }
@@ -180,10 +217,10 @@
 
         .final-message {
             text-align: center;
-            padding: 4rem 2rem;
-            background: rgba(255, 255, 255, 0.3);
+            padding: 3rem 1.5rem 4rem;
+            background: rgba(255, 255, 255, 0.35);
             backdrop-filter: blur(10px);
-            margin-top: 3rem;
+            margin-top: 2rem;
             position: relative;
             z-index: 3;
         }
@@ -191,57 +228,119 @@
         .final-message h2 {
             font-family: 'Dancing Script', cursive;
             font-size: 3rem;
-            color: #ff69b4;
-            margin-bottom: 2rem;
+            color: var(--accent);
+            margin-bottom: 1.2rem;
             animation: heartbeat 2s infinite;
         }
 
         @keyframes heartbeat {
             0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
+            50% { transform: scale(1.08); }
         }
 
         .final-message p {
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             max-width: 800px;
-            margin: 0 auto 2rem;
-            line-height: 1.8;
+            margin: 0 auto 1rem;
+            line-height: 1.7;
         }
 
-        .goodbye-btn {
+        .action-row {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 1.5rem;
+        }
+
+        .goodbye-btn,
+        .action-btn {
             display: inline-block;
-            padding: 1rem 2rem;
-            font-size: 1.2rem;
-            background: linear-gradient(45deg, #ff69b4, #da70d6);
+            padding: 0.85rem 1.4rem;
+            font-size: 1rem;
+            background: linear-gradient(45deg, var(--accent), var(--accent-soft));
             color: white;
             border: none;
             border-radius: 50px;
             cursor: pointer;
             text-decoration: none;
             transition: all 0.3s ease;
-            box-shadow: 0 5px 15px rgba(255, 105, 180, 0.4);
-            animation: float 3s infinite ease-in-out;
+            box-shadow: 0 5px 15px rgba(255, 105, 180, 0.3);
         }
 
-        .goodbye-btn:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 20px rgba(255, 105, 180, 0.6);
+        .goodbye-btn:hover,
+        .action-btn:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(255, 105, 180, 0.45);
         }
 
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
+        .lightbox {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.8);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 10001;
+            padding: 1rem;
+        }
+
+        .lightbox.open { display: flex; }
+
+        .lightbox img {
+            max-width: 92vw;
+            max-height: 84vh;
+            border-radius: 18px;
+            box-shadow: 0 16px 34px rgba(0, 0, 0, 0.45);
+        }
+
+        .letter-modal {
+            position: fixed;
+            inset: 0;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            background: rgba(16, 16, 16, 0.55);
+            z-index: 10002;
+            padding: 1rem;
+        }
+
+        .letter-modal.open { display: flex; }
+
+        .letter-box {
+            width: min(680px, 94vw);
+            background: #fff8f0;
+            border-radius: 16px;
+            padding: 1.2rem;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .letter-box h3 {
+            font-family: 'Dancing Script', cursive;
+            color: var(--accent);
+            font-size: 2rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .letter-content {
+            min-height: 130px;
+            line-height: 1.8;
+            font-size: 1rem;
+            white-space: pre-wrap;
+        }
+
+        .close-btn {
+            margin-top: 1rem;
+            border: 0;
+            border-radius: 999px;
+            padding: 0.6rem 1rem;
+            background: #f4f4f4;
+            cursor: pointer;
         }
 
         @keyframes fadeInScale {
-            0% {
-                opacity: 0;
-                transform: scale(0.8);
-            }
-            100% {
-                opacity: 1;
-                transform: scale(1);
-            }
+            0% { opacity: 0; transform: scale(0.85); }
+            100% { opacity: 1; transform: scale(1); }
         }
 
         @keyframes fadeIn {
@@ -249,17 +348,19 @@
             100% { opacity: 1; }
         }
 
-        ::-webkit-scrollbar { width: 12px; }
-        ::-webkit-scrollbar-track { background: rgba(255, 255, 255, 0.4); }
-        ::-webkit-scrollbar-thumb {
-            background: linear-gradient(45deg, #ff69b4, #da70d6);
-            border-radius: 6px;
-        }
-
         @media (max-width: 768px) {
-            .welcome h1 { font-size: 3rem; }
-            .memory-container { grid-template-columns: 1fr; }
-            .final-message h2 { font-size: 2.5rem; }
+            .welcome { padding: 3.2rem 1rem 1.2rem; }
+            .welcome h1 { font-size: 2.6rem; }
+            .welcome p { font-size: 1rem; }
+            .timeline h2 { font-size: 2rem; }
+            .memory-container { grid-template-columns: 1fr; padding: 1rem; }
+            .final-message h2 { font-size: 2.2rem; }
+            .action-row { gap: 8px; }
+            .goodbye-btn,
+            .action-btn {
+                width: min(94vw, 320px);
+                text-align: center;
+            }
         }
 
         @media (prefers-reduced-motion: reduce) {
@@ -283,10 +384,20 @@
 
     <section class="welcome">
         <h1>Our Beautiful Moments Together</h1>
-        <p>Every moment spent with you has been magical. Let's cherish these precious memories...</p>
+        <p>Every moment spent with you has been magical. Let's cherish these precious memories and celebrate your special day, Barsha.</p>
     </section>
 
-    <div class="memory-container">
+    <section class="timeline">
+        <h2>Our Little Timeline</h2>
+        <div class="timeline-list">
+            <div class="timeline-item"><strong>First Vibe</strong>The day your smile made everything feel lighter.</div>
+            <div class="timeline-item"><strong>Sweet Talks</strong>Conversations that turned ordinary days into warm memories.</div>
+            <div class="timeline-item"><strong>Strong Bond</strong>Every moment made this bond more meaningful and beautiful.</div>
+            <div class="timeline-item"><strong>Today</strong>Happy Birthday Barsha, this day is all about you.</div>
+        </div>
+    </section>
+
+    <div class="memory-container" id="memoryContainer">
         <div class="memory-card">
             <img src="./d1.jpg" alt="Memory 1" class="memory-img">
             <div class="memory-date">Her Smile Says It All</div>
@@ -322,12 +433,35 @@
     <section class="final-message">
         <h2>Thank You for the Memories</h2>
         <p>
-            Every laugh, every chat, and every moment we've shared has been truly special. 💫<br>
-            I'm so grateful for the bond we have, and for the positivity you always bring into my life.<br>
-            On your birthday, I wish endless happiness, love, and success to come your way. 🌸
+            Every laugh, every chat, and every moment we've shared has been truly special.<br>
+            I am so grateful for the bond we have and for the positivity you always bring.
         </p>
-        <p>You deserve all the joy in the world, keep shining and spreading your beautiful energy. ✨</p>
-        <a href="index.html" class="goodbye-btn">Until We Meet Again 💝</a>
+        <p>You deserve all the joy in the world. Keep shining, keep smiling, and stay blessed always.</p>
+
+        <div class="action-row">
+            <button id="voiceNoteBtn" class="action-btn" type="button">Play My Voice Note 🎤</button>
+            <button id="openLetterBtn" class="action-btn" type="button">Open Love Letter 💌</button>
+            <a href="surprise.html" class="action-btn" id="surpriseBtn">Final Surprise 🎆</a>
+            <a href="index.html" class="goodbye-btn">Back to Start 💝</a>
+        </div>
     </section>
+
+    <div class="lightbox" id="lightbox" aria-hidden="true">
+        <img id="lightboxImg" src="" alt="Expanded memory">
+    </div>
+
+    <div class="letter-modal" id="letterModal" aria-hidden="true">
+        <div class="letter-box">
+            <h3>For You, Barsha</h3>
+            <div class="letter-content" id="letterContent"></div>
+            <button class="close-btn" id="closeLetterBtn" type="button">Close</button>
+        </div>
+    </div>
+
+    <script src="enhancements.js"></script>
+    <script src="birthdaySong.js"></script>
+    <script src="last.js"></script>
 </body>
 </html>
+
+

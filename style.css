@@ -1,4 +1,14 @@
-﻿* {
+﻿:root {
+    --bg-1: #fee9f7;
+    --bg-2: #e8f5fe;
+    --bg-3: #fef2e8;
+    --bg-4: #f0ffe8;
+    --accent: #ff69b4;
+    --accent-soft: #ff99cc;
+    --text-strong: #7c2450;
+}
+
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -11,10 +21,10 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(-45deg, #fee9f7, #e8f5fe, #fef2e8, #f0ffe8);
+    background: linear-gradient(-45deg, var(--bg-1), var(--bg-2), var(--bg-3), var(--bg-4));
     background-size: 400% 400%;
     animation: gradientBG 15s ease infinite;
-    font-family: 'Arial Rounded MT Bold', Arial, sans-serif;
+    font-family: 'Arial Rounded MT Bold', Arial, 'Segoe UI Emoji', 'Noto Color Emoji', sans-serif;
     overflow: hidden;
     position: relative;
 }
@@ -38,9 +48,30 @@ body {
 
 h1 {
     font-size: 3.5rem;
-    color: #ff69b4;
+    color: var(--accent);
     text-shadow: 0 0 10px rgba(255, 105, 180, 0.5);
     margin-bottom: 2rem;
+    opacity: 0;
+}
+
+.hero-subtitle {
+    font-size: 1.4rem;
+    color: var(--text-strong);
+    font-weight: 700;
+    margin-top: -0.7rem;
+    margin-bottom: 0.8rem;
+    opacity: 0;
+}
+
+.hero-intro {
+    display: inline-block;
+    background: rgba(255, 255, 255, 0.72);
+    color: var(--text-strong);
+    padding: 0.45rem 1rem;
+    border-radius: 999px;
+    font-size: 0.92rem;
+    margin-bottom: 1.2rem;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
     opacity: 0;
 }
 
@@ -54,7 +85,7 @@ h1 {
 .cta-button {
     padding: 1rem 2rem;
     font-size: 1.2rem;
-    background: linear-gradient(45deg, #ff69b4, #ff99cc);
+    background: linear-gradient(45deg, var(--accent), var(--accent-soft));
     border: none;
     border-radius: 50px;
     color: white;
@@ -83,8 +114,10 @@ h1 {
 
 @media (max-width: 768px) {
     h1 { font-size: 2rem; }
+    .hero-subtitle { font-size: 1.05rem; }
+    .hero-intro { font-size: 0.82rem; padding: 0.42rem 0.8rem; }
     .greeting { font-size: 1.2rem; }
-    .cta-button { font-size: 1rem; }
+    .cta-button { font-size: 1rem; width: min(92vw, 320px); }
 }
 
 @media (hover: none), (pointer: coarse) {
@@ -99,3 +132,5 @@ h1 {
         transition-duration: 0.01ms !important;
     }
 }
+
+

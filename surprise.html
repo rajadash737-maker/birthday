@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Final Surprise</title>
+    <style>
+        :root {
+            --c1: #101820;
+            --c2: #3a0f53;
+            --c3: #ff4fa4;
+            --c4: #ffd166;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            min-height: 100vh;
+            color: #fff;
+            font-family: "Trebuchet MS", Arial, sans-serif;
+            background: radial-gradient(circle at top, #2a2e5f 0%, var(--c1) 60%, #07090f 100%);
+            overflow: hidden;
+        }
+
+        canvas {
+            position: fixed;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .overlay {
+            position: relative;
+            z-index: 2;
+            min-height: 100vh;
+            display: grid;
+            place-items: center;
+            text-align: center;
+            padding: 1rem;
+        }
+
+        .card {
+            width: min(700px, 94vw);
+            background: rgba(255, 255, 255, 0.09);
+            backdrop-filter: blur(7px);
+            border-radius: 20px;
+            padding: 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 16px 35px rgba(0, 0, 0, 0.3);
+        }
+
+        h1 {
+            font-size: clamp(2rem, 6vw, 3.5rem);
+            margin-bottom: 0.8rem;
+            color: #ffd6eb;
+        }
+
+        p {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            margin-bottom: 1.1rem;
+        }
+
+        .tap-btn,
+        .back-btn {
+            display: inline-block;
+            margin: 0.4rem;
+            border: 0;
+            border-radius: 999px;
+            padding: 0.8rem 1.4rem;
+            font-size: 1rem;
+            cursor: pointer;
+            color: white;
+            background: linear-gradient(45deg, var(--c3), var(--c4));
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="fireworks"></canvas>
+    <div class="overlay">
+        <div class="card">
+            <h1>Happy Birthday Barsha 🎉</h1>
+            <p id="line">Tap below for the final birthday surprise.</p>
+            <button class="tap-btn" id="tapBtn" type="button">Tap To Reveal</button>
+            <a href="index.html" class="back-btn">Back Home</a>
+        </div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById("fireworks");
+        const ctx = canvas.getContext("2d");
+        const tapBtn = document.getElementById("tapBtn");
+        const line = document.getElementById("line");
+        const particles = [];
+
+        function resize() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+
+        function burst(x, y) {
+            const colors = ["#ff5fa2", "#ffd166", "#7bdff2", "#c77dff", "#81f495"];
+            for (let i = 0; i < 90; i += 1) {
+                const angle = (Math.PI * 2 * i) / 90;
+                const speed = 1.5 + Math.random() * 4;
+                particles.push({
+                    x,
+                    y,
+                    vx: Math.cos(angle) * speed,
+                    vy: Math.sin(angle) * speed,
+                    life: 70 + Math.random() * 25,
+                    color: colors[i % colors.length]
+                });
+            }
+        }
+
+        function draw() {
+            ctx.fillStyle = "rgba(0, 0, 0, 0.16)";
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            for (let i = particles.length - 1; i >= 0; i -= 1) {
+                const p = particles[i];
+                p.x += p.vx;
+                p.y += p.vy;
+                p.vy += 0.03;
+                p.life -= 1;
+
+                ctx.beginPath();
+                ctx.fillStyle = p.color;
+                ctx.arc(p.x, p.y, 2.2, 0, Math.PI * 2);
+                ctx.fill();
+
+                if (p.life <= 0) {
+                    particles.splice(i, 1);
+                }
+            }
+            requestAnimationFrame(draw);
+        }
+
+        tapBtn.addEventListener("click", () => {
+            burst(canvas.width * 0.5, canvas.height * 0.45);
+            burst(canvas.width * 0.25, canvas.height * 0.5);
+            burst(canvas.width * 0.75, canvas.height * 0.5);
+            line.textContent = "You are loved, celebrated and cherished. Have an amazing year ahead.";
+        });
+
+        window.addEventListener("resize", resize);
+        resize();
+        draw();
+    </script>
+</body>
+</html>

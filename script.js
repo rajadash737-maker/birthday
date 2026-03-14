@@ -1,12 +1,22 @@
 ﻿const cursor = document.querySelector('.cursor');
 const greetingElement = document.querySelector('.greeting');
 const ctaButton = document.querySelector('.cta-button');
+const heroSubtitle = document.querySelector('.hero-subtitle');
+const heroIntro = document.querySelector('.hero-intro');
 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 const greetingText = "Hey, you know what? You are the most adorable human I have ever met! 💖";
 const floatingElements = ['💖', '✨', '🌸', '💫', '💕'];
 let charIndex = 0;
 let floatingIntervalId = null;
+
+if (typeof window.setupRomanticEnhancements === 'function') {
+    window.setupRomanticEnhancements();
+}
+
+if (typeof window.setupBirthdayMusic === 'function') {
+    window.setupBirthdayMusic();
+}
 
 function typeGreeting() {
     if (!greetingElement || charIndex >= greetingText.length) {
@@ -82,6 +92,24 @@ window.addEventListener('load', () => {
         ease: 'bounce.out'
     });
 
+    if (heroSubtitle) {
+        gsap.to(heroSubtitle, {
+            opacity: 1,
+            y: -8,
+            duration: 0.9,
+            delay: 0.2
+        });
+    }
+
+    if (heroIntro) {
+        gsap.to(heroIntro, {
+            opacity: 1,
+            y: -8,
+            duration: 0.9,
+            delay: 0.35
+        });
+    }
+
     gsap.to('.cta-button', {
         opacity: 1,
         duration: 1,
@@ -117,6 +145,11 @@ if (ctaButton) {
     });
 
     ctaButton.addEventListener('click', () => {
+        if (typeof window.createConfettiBurst === 'function') {
+            const rect = ctaButton.getBoundingClientRect();
+            window.createConfettiBurst(rect.left + rect.width / 2, rect.top + rect.height / 2, 38);
+        }
+
         gsap.to('body', {
             opacity: 0,
             duration: 0.8,
@@ -126,3 +159,4 @@ if (ctaButton) {
         });
     });
 }
+

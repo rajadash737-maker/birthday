@@ -32,6 +32,14 @@ let isTransitioning = false;
 let canNavigate = false;
 let floatingIntervalId = null;
 
+if (typeof window.setupRomanticEnhancements === 'function') {
+    window.setupRomanticEnhancements();
+}
+
+if (typeof window.setupBirthdayMusic === 'function') {
+    window.setupBirthdayMusic();
+}
+
 function createReasonCard(reason) {
     const card = document.createElement('div');
     card.className = 'reason-card';
@@ -140,6 +148,12 @@ function displayNewReason() {
     currentReasonIndex += 1;
     updateCounter();
 
+    if (typeof window.createConfettiBurst === 'function') {
+        const x = Math.floor(window.innerWidth / 2);
+        const y = Math.floor(window.innerHeight / 3);
+        window.createConfettiBurst(x, y, 24);
+    }
+
     if (currentReasonIndex === reasons.length) {
         if (prefersReducedMotion) {
             enableStoryMode();
@@ -162,6 +176,10 @@ function displayNewReason() {
 if (shuffleButton) {
     shuffleButton.addEventListener('click', () => {
         if (canNavigate) {
+            if (typeof window.createConfettiBurst === 'function') {
+                const rect = shuffleButton.getBoundingClientRect();
+                window.createConfettiBurst(rect.left + rect.width / 2, rect.top + rect.height / 2, 40);
+            }
             goToLastPage();
             return;
         }
@@ -197,3 +215,4 @@ document.addEventListener('visibilitychange', () => {
 
 startFloating();
 updateCounter();
+
